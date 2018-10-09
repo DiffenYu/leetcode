@@ -38,10 +38,8 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        print("input s: " + s)
         stack = []
         for ch in s:
-            print("ch: " + ch)
             if ch == "(" or ch == "[" or ch == "{":
                 stack.append(ch)
                 continue
@@ -65,14 +63,34 @@ class Solution(object):
 
         return False
 
+class Solution2(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+
+        stack = []
+        lookup = {")": "(", "]": "[", "}": "{"}
+        for ch in s:
+            if ch in lookup.values():
+                stack.append(ch)
+            elif ch in lookup.keys():
+                if not stack or (stack and lookup[ch] != stack.pop()):
+                    return False
+            else:
+                return False
+
+        return not stack
+
 
 def test():
-    solu = Solution()
+    solu = Solution2()
     # s = "()"
     # s = "()[]{}"
-    s = "(]"
+    # s = "(]"
     # s = "([)]"
-    # s = "{[]}"
+    s = "{[]}"
     result = solu.isValid(s)
     print("Output: " + str(result))
 
